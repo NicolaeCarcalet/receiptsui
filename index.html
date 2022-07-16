@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Receipt Storer</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+    <div class="jumbotron">
+        <h1 class="display-4">Receipt Storer</h1>
+    </div>
+    <form class="form">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Receipt Image</label>
+            <input type="file" class="form-control" id="fileUpload">
+        </div>
+        <input type="button" onclick="uploadFile(event)" value="Submit" class="btn btn-primary">
+    </form>
+
+    <script>
+        function uploadFile(event) {
+            event.preventDefault();
+            console.log("Uploading file");
+            var input = document.querySelector('input[type="file"]')
+
+            var data = new FormData();
+            data.append('file', input.files[0]);
+
+            fetch('https://limitless-sands-47018.herokuapp.com/receipt', {
+                method: 'POST',
+                body: data
+            })
+                .then(response => console.log(`response ${JSON.stringify(response)}`));
+
+            return false;
+        }
+    </script>
+</body>
+
+</html>
